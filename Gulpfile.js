@@ -30,11 +30,15 @@ gulp.task('build_md', function() {
 });
 
 // compile Sass files
-gulp.task('build_sass', function() {
-  gulp.src('./src/sass/main.scss')
+gulp.task('build_css', function() {
+  gulp.src('./src/scss/sassBuildFile.scss')
   .pipe(sass())
   .pipe(autoprefixer({
     browsers: ['last 10 versions']
+  }))
+  .pipe(rename({
+    basename: 'style',
+    extname: '.css'
   }))
   .pipe(gulp.dest('./dist/css'))
   .pipe(mincss())
@@ -53,8 +57,9 @@ gulp.task('serve_locally', function() {
 });
 
 // default tasks performed via `$ gulp`
-gulp.task('default', ['copy_html','build_md','build_sass','serve_locally'], function() {
+//gulp.task('default', ['copy_html','build_md','build_css','serve_locally'], function() {
+gulp.task('default', ['copy_html','build_css','serve_locally'], function() {
   gulp.watch('./src/**/*.html', ['copy_html']);
-  gulp.watch('./src/md/**/*.md', ['build_md']);
-  gulp.watch('./src/sass/*.scss', ['build_sass']);
+  //gulp.watch('./src/md/**/*.md', ['build_md']);
+  gulp.watch('./src/sass/*.scss', ['build_css']);
 });
